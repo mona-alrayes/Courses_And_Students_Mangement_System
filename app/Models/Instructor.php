@@ -4,12 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Instructor extends Model
 {
     use HasFactory, softDeletes;
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
+
 
     protected $fillable = [
         'name',
@@ -53,9 +56,14 @@ class Instructor extends Model
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     
-    public function students(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    public function students():\Staudenmeir\EloquentHasManyDeep\HasManyDeep
     {
-        #TODO should find way to fix hasManyThrough or delete it completely
-        return $this->hasManyThrough(Student::class, courseInstructor::class, 'instructor_id', 'course_id', 'id', 'id');
+        return $this->hasManyDeep(Student::class, ['course_instructor', Course::class, 'course_student']);
+    }
+
+    public function getStudents()
+    {
+        $pivotData= $this->hasManyThrough(courseStudent::class, courseInstructor::class, 'instructor_id', 'course_id', 'id', 'id');
+        return Student::whereIn('id', $pivotData->pluck('student_id'));
     }
 }
