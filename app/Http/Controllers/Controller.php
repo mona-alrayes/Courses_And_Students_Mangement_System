@@ -11,6 +11,14 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
+    /**
+     * sucess function
+     *
+     * @param [type] $data
+     * @param string $message
+     * @param integer $status
+     * @return \Illuminate\Http\JsonResponse
+     */
     public static function success($data = null, $message = 'Done Successfully!', $status = 200): \Illuminate\Http\JsonResponse
     {
         return response()->json([
@@ -19,6 +27,15 @@ class Controller extends BaseController
             'data' => $data,
         ], $status);
     }
+
+    /**
+     * error function
+     *
+     * @param [type] $data
+     * @param string $message
+     * @param integer $status
+     * @return \Illuminate\Http\JsonResponse
+     */
     public static function error($data = null, $message = 'Operation failed!', $status = 400): \Illuminate\Http\JsonResponse
     {
         return response()->json([
@@ -28,6 +45,14 @@ class Controller extends BaseController
         ], $status);
     }
 
+    /**
+     * pagination function
+     *
+     * @param LengthAwarePaginator $paginator
+     * @param string $message
+     * @param [type] $status
+     * @return \Illuminate\Http\JsonResponse
+     */
     public static function paginated(LengthAwarePaginator $paginator, $message = '', $status): \Illuminate\Http\JsonResponse
     {
         return response()->json([

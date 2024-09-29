@@ -23,9 +23,13 @@ class CoursesService
     }
 
     /**
+     * store new course in storage 
+     *
+     * @param [type] $courseData
+     * @return Course
      * @throws Exception
      */
-    public function storeCourse(array $courseData): Course
+    public function storeCourse($courseData): Course
     {
         try {
             $course = Course::create($courseData);
@@ -39,10 +43,14 @@ class CoursesService
     }
 
 
-    /**
-     * @throws Exception
-     */
-    public function updateCourse(Course $course, array $courseData): Course
+   /**
+    * update specific course 
+    * @throws Exception
+    * @param Course $course
+    * @param [type] $courseData
+    * @return Course
+    */
+    public function updateCourse(Course $course, $courseData): Course
     {
         try{
             $course->update(array_filter($courseData));

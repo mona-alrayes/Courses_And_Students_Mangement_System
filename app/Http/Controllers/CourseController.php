@@ -26,8 +26,10 @@ class CourseController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     * @throws \Exception
+     * Store a newly created course in storage.
+     *
+     * @param StoreCourseRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreCourseRequest $request): \Illuminate\Http\JsonResponse
     {
@@ -36,7 +38,10 @@ class CourseController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * show course method
+     *
+     * @param Course $course
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Course $course): \Illuminate\Http\JsonResponse
     {
@@ -44,8 +49,11 @@ class CourseController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     * @throws \Exception
+     * Update the specified course in storage.
+     *
+     * @param UpdateCourseRequest $request
+     * @param Course $course
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateCourseRequest $request, Course $course): \Illuminate\Http\JsonResponse
     {
@@ -54,26 +62,47 @@ class CourseController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified course from storage.
+     *
+     * @param Course $course
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Course $course): \Illuminate\Http\JsonResponse
     {
         $course->delete();
         return self::success( 'Course deleted successfully.');
     }
-
+    
+    /**
+     * show softDeleted courses
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function ShowSoftDeletedCourses(): \Illuminate\Http\JsonResponse
     {
         $softDeletedCourses = Course::onlyTrashed()->paginate(10);
         return self::paginated($softDeletedCourses, 'Deleted Courses retrieved successfully.', 200);
     }
 
+    /**
+     * restore softDeleted course
+     *
+     * @param [type] $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function restoreCourse($id): \Illuminate\Http\JsonResponse
     {
         $course = Course::withTrashed()->findOrFail($id);
         $course->restore();
         return self::success( $course,'Course restored successfully.', 201);
     }
+
+    /**
+     * Delete forever softDeleted course 
+     *
+     * @param Course $course
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function forceDeleteCourse(Course $course): \Illuminate\Http\JsonResponse
     {
         $course->forceDelete();
