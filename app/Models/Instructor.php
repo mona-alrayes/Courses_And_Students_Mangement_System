@@ -19,10 +19,24 @@ class Instructor extends Model
 
     protected $casts = ['experience' => 'integer'];
 
+    /**
+     * Relationship function
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * 
+     */
+
     public function courses(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Course::class, 'course_instructor', 'instructor_id', 'course_id');
     }
+
+    /**
+     * get student Names of specific instructor
+     *
+     * @param Instructor $instructor
+     * @return void
+     */
 
     public function studentNames(Instructor $instructor)
     {
@@ -32,6 +46,13 @@ class Instructor extends Model
             });
         });
     }
+
+    /**
+     * students of specific insturator function
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    
     public function students(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
     {
         #TODO should find way to fix hasManyThrough or delete it completely
