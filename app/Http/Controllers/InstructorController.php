@@ -12,7 +12,8 @@ class InstructorController extends Controller
 {
     protected InstructorService $instructorService;
 
-    public function __construct(InstructorService $instructorService){
+    public function __construct(InstructorService $instructorService)
+    {
         $this->instructorService = $instructorService;
     }
 
@@ -23,7 +24,7 @@ class InstructorController extends Controller
     public function index(): \Illuminate\Http\JsonResponse
     {
         $instructors = $this->instructorService->getInstructors();
-        return self::paginated($instructors , 'instructors retrieved successfully' , 200);
+        return self::paginated($instructors, 'instructors retrieved successfully', 200);
     }
 
     /**
@@ -50,8 +51,8 @@ class InstructorController extends Controller
      */
     public function update(UpdateInstructorRequest $request, Instructor $instructor): \Illuminate\Http\JsonResponse
     {
-        $instructor= $this->instructorService->updateInstructor($instructor , $request->validated());
-        return self::success($instructor, 'instructor updated successfully' , 201);
+        $instructor = $this->instructorService->updateInstructor($instructor, $request->validated());
+        return self::success($instructor, 'instructor updated successfully', 201);
     }
 
     /**
@@ -65,8 +66,8 @@ class InstructorController extends Controller
 
     public function ShowSoftDeletedInstructors(): \Illuminate\Http\JsonResponse
     {
-       $softDeletedInstructors = Instructor::onlyTrashed()->paginate(10);
-       return self::paginated($softDeletedInstructors , 'instructors retrieved successfully', 200);
+        $softDeletedInstructors = Instructor::onlyTrashed()->paginate(10);
+        return self::paginated($softDeletedInstructors, 'instructors retrieved successfully', 200);
     }
     public function restoreInstructor($id): \Illuminate\Http\JsonResponse
     {
@@ -83,15 +84,14 @@ class InstructorController extends Controller
 
     public function showCourses(Instructor $instructor): \Illuminate\Http\JsonResponse
     {
-//        $courses = $instructor->hasMany(Course::class)->paginate(10);
+        //        $courses = $instructor->hasMany(Course::class)->paginate(10);
         $courses = $instructor->courses()->paginate(10);
-        return self::paginated($courses , 'courses retrieved successfully' , 200);
+        return self::paginated($courses, 'courses retrieved successfully', 200);
     }
     public function showStudents(Instructor $instructor): \Illuminate\Http\JsonResponse
     {
-//       $students = $instructor->students()->paginate(10);
-       $students = Instructor::studentNames($instructor)->paginate(10);
-        return self::paginated($students , 'students retrieved successfully' , 200);
+        //       $students = $instructor->students()->paginate(10);
+        $students = $instructor->studentNames($instructor)->paginate(10);
+        return self::paginated($students, 'students retrieved successfully', 200);
     }
-
 }

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Instructor extends Model
 {
-    use HasFactory , softDeletes;
+    use HasFactory, softDeletes;
 
     protected $fillable = [
         'name',
@@ -23,7 +23,8 @@ class Instructor extends Model
     {
         return $this->belongsToMany(Course::class, 'course_instructor', 'instructor_id', 'course_id');
     }
-    public static function studentNames(Instructor $instructor)
+
+    public function studentNames(Instructor $instructor)
     {
         return Student::whereHas('courses', function ($query) use ($instructor) {
             $query->whereHas('instructors', function ($q) use ($instructor) {
@@ -34,6 +35,6 @@ class Instructor extends Model
     public function students(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
     {
         #TODO should find way to fix hasManyThrough or delete it completely
-        return $this->hasManyThrough(Student::class, courseInstructor::class, 'instructor_id', 'course_id', 'id','id');
+        return $this->hasManyThrough(Student::class, courseInstructor::class, 'instructor_id', 'course_id', 'id', 'id');
     }
 }
