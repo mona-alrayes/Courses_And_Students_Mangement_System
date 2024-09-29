@@ -15,7 +15,11 @@ class Student extends Model
         'email',
     ];
 
-
+    /**
+     * Relationship of pivot Table function
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function courses(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Course::class,'course_student', 'student_id', 'course_id');
