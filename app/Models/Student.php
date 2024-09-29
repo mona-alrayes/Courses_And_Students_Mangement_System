@@ -17,6 +17,6 @@ class student extends Model
 
     public function courses(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(course::class);
+        return $this->belongsToMany(course::class,'course_student', 'student_id', 'course_id');
     }
 }
