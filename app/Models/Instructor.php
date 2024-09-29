@@ -34,13 +34,15 @@ class Instructor extends Model
         return $this->belongsToMany(Course::class, 'course_instructor', 'instructor_id', 'course_id');
     }
 
+    
     /**
-     * get student Names of specific instructor
+     * Get all instructors with the given name.
      *
-     * @param Instructor $instructor
-     * @return void
+     * @param string $name
+     * @return \Illuminate\Database\Eloquent\Builder
+     * 
      */
-
+    
     public function studentNames(Instructor $instructor)
     {
         return Student::whereHas('courses', function ($query) use ($instructor) {
@@ -61,9 +63,15 @@ class Instructor extends Model
         return $this->hasManyDeep(Student::class, ['course_instructor', Course::class, 'course_student']);
     }
 
+    /**
+     * get students of specific insturator function
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+
     public function getStudents()
     {
-        $pivotData= $this->hasManyThrough(courseStudent::class, courseInstructor::class, 'instructor_id', 'course_id', 'id', 'id');
-        return Student::whereIn('id', $pivotData->pluck('student_id'));
+        return $pivotData= $this->hasManyThrough(courseStudent::class, courseInstructor::class, 'instructor_id', 'course_id', 'id', 'course_id');
+        // return Student::whereIn('id', $pivotData->pluck('student_id'));
     }
 }

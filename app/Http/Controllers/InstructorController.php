@@ -136,9 +136,9 @@ class InstructorController extends Controller
      */
     public function showStudents(Instructor $instructor): \Illuminate\Http\JsonResponse
     {
-         $students = $instructor->students()->paginate(10);     //first solution 
-        // $students = $instructor->studentNames($instructor)->paginate(10);    //second solution 
-        // $students = $instructor->getStudents()->paginate(10);        //third solution 
+        //   $students = $instructor->students()->paginate(10);     //first solution 
+          $students = $instructor->studentNames($instructor)->paginate(10);    //second solution 
+        //   $students = $instructor->getStudents()->paginate(10);        //third solution 
          return self::paginated($students , 'students retrieved successfully', 200);
     }
 }

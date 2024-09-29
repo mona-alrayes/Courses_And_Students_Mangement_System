@@ -30,10 +30,11 @@ class InstructorService
         try {
             $instructor = Instructor::create($instructorData);
 
-            // Use array syntax to access 'course_id'
-            if (isset($instructorData['course_id'])) {
-                $instructor->courses()->sync($instructorData['course_id']);
-            }
+            // Ensure 'course_id' is always an array, even if a single ID is provided
+        if (isset($instructorData['course_id'])) {
+            $courseIds = is_array($instructorData['course_id']) ? $instructorData['course_id'] : [$instructorData['course_id']];
+            $instructor->courses()->sync($courseIds);
+        }
 
             return $instructor->load('courses');
         } catch (Exception $exception) {
@@ -49,9 +50,11 @@ class InstructorService
     {
         try{
             $instructor->update(array_filter($instructorData));
-            if (isset($instructorData['course_id'])) {
-                $instructor->courses()->sync($instructorData['course_id']);
-            }
+             // Ensure 'course_id' is always an array, even if a single ID is provided
+        if (isset($instructorData['course_id'])) {
+            $courseIds = is_array($instructorData['course_id']) ? $instructorData['course_id'] : [$instructorData['course_id']];
+            $instructor->courses()->sync($courseIds);
+        }
             return $instructor->load('courses');
         }catch (Exception $exception) {
             throw new Exception($exception->getMessage());

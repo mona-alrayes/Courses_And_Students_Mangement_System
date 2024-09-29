@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Models\Course;
@@ -33,8 +34,10 @@ class CoursesService
     {
         try {
             $course = Course::create($courseData);
+            // Ensure 'course_id' is always an array, even if a single ID is provided
             if (isset($courseData['instructor_id'])) {
-                $course->instructors()->sync($courseData['instructor_id']);
+                $instructorIds = is_array($courseData['instructor_id']) ? $courseData['instructor_id'] : [$courseData['instructor_id']];
+                $course->instructors()->sync($instructorIds);
             }
             return $course->load('instructors');
         } catch (Exception $exception) {
@@ -43,22 +46,23 @@ class CoursesService
     }
 
 
-   /**
-    * update specific course 
-    * @throws Exception
-    * @param Course $course
-    * @param [type] $courseData
-    * @return Course
-    */
+    /**
+     * update specific course 
+     * @throws Exception
+     * @param Course $course
+     * @param [type] $courseData
+     * @return Course
+     */
     public function updateCourse(Course $course, $courseData): Course
     {
-        try{
+        try {
             $course->update(array_filter($courseData));
             if (isset($courseData['instructor_id'])) {
-                $course->instructors()->sync($courseData['instructor_id']);
+                $instructorIds = is_array($courseData['instructor_id']) ? $courseData['instructor_id'] : [$courseData['instructor_id']];
+                $course->instructors()->sync($instructorIds);
             }
             return $course->load('instructors');
-        }catch (Exception $exception) {
+        } catch (Exception $exception) {
             throw new Exception($exception->getMessage());
         }
     }

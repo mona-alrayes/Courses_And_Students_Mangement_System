@@ -108,4 +108,10 @@ class CourseController extends Controller
         $course->forceDelete();
         return self::success( 'Course deleted successfully.', 200);
     }
+
+    public function showStudents(Course $course): \Illuminate\Http\JsonResponse
+    {
+      $students = $course->students()->paginate(10);
+      return self::paginated($students, ' students retrieved sucessfully', 200);
+    }
 }
