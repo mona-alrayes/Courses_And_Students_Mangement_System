@@ -20,11 +20,27 @@ class Course extends Model
         'start_date' => 'date',
     ];
 
+    /**
+     * Relationship function
+     * 
+     * Many-to-Many between Instructors and Courses 
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
 
     public function instructors(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Instructor::class , 'course_instructor', 'course_id', 'instructor_id');
     }
+
+    /**
+     * Relationship function
+     * 
+     * Many to Many between students and courses
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    
     public function students(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Student::class , 'course_student', 'course_id', 'student_id');
