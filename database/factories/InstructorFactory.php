@@ -18,8 +18,9 @@ class InstructorFactory extends Factory
     {
         return [
             'name' => $this->faker->unique()->name(),
-            'experience' => $this->faker->numberBetween(1,30),
-            'specialty' => $this->faker->unique()->text(),
+            'experience' => $this->faker->numberBetween(1, 30), // Years of experience between 1 and 30
+            'specialty' => $this->faker->words(3, true), // Generates a more focused specialty with three words
+
         ];
     }
 }

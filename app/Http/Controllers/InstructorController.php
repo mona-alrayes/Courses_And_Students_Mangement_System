@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\instructors\StoreInstructorRequest;
 use App\Http\Requests\instructors\UpdateInstructorRequest;
-use App\Models\Course;
 use App\Models\Instructor;
-use App\Models\student;
 use App\Services\InstructorService;
 use Exception;
 
@@ -85,12 +83,15 @@ class InstructorController extends Controller
 
     public function showCourses(Instructor $instructor): \Illuminate\Http\JsonResponse
     {
-        $courses = $instructor->hasMany(Course::class)->paginate(10);
+//        $courses = $instructor->hasMany(Course::class)->paginate(10);
+        $courses = $instructor->courses()->paginate(10);
         return self::paginated($courses , 'courses retrieved successfully' , 200);
     }
     public function showStudents(Instructor $instructor): \Illuminate\Http\JsonResponse
     {
-        $students = $instructor->hasManyThrough(Student::class, Course::class , 'instructor_id' , 'course_id' , 'id' , 'id' )->paginate(10);
+//       $students = $instructor->students()->paginate(10);
+       $students = Instructor::studentNames($instructor)->paginate(10);
         return self::paginated($students , 'students retrieved successfully' , 200);
     }
+
 }

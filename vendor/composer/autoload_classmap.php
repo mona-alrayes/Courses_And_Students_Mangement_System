@@ -167,6 +167,7 @@ return array(
     'Database\\Factories\\UserFactory' => $baseDir . '/database/factories/UserFactory.php',
     'Database\\Seeders\\CourseInstructorSeeder' => $baseDir . '/database/seeders/CourseInstructorSeeder.php',
     'Database\\Seeders\\CourseSeeder' => $baseDir . '/database/seeders/CourseSeeder.php',
+    'Database\\Seeders\\CourseStudentSeeder' => $baseDir . '/database/seeders/CourseStudentSeeder.php',
     'Database\\Seeders\\DatabaseSeeder' => $baseDir . '/database/seeders/DatabaseSeeder.php',
     'Database\\Seeders\\InstructorSeeder' => $baseDir . '/database/seeders/InstructorSeeder.php',
     'Database\\Seeders\\StudentSeeder' => $baseDir . '/database/seeders/StudentSeeder.php',

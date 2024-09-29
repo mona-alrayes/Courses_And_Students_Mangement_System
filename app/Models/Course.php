@@ -23,11 +23,11 @@ class Course extends Model
 
     public function instructors(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Instructor::class);
+        return $this->belongsToMany(Instructor::class , 'course_instructor', 'course_id', 'instructor_id');
     }
     public function students(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Student::class);
+        return $this->belongsToMany(Student::class , 'course_student', 'course_id', 'student_id');
     }
 
 }

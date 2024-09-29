@@ -17,9 +17,9 @@ class CourseFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->unique()->word(),
-            'description' => $this->faker->unique()->paragraph(),
-            'start_date' => $this->faker->unique()->date(),
+            'title' => $this->faker->unique()->sentence(3), // Generates a more descriptive course title
+            'description' => $this->faker->unique()->paragraphs(3, true), // Provides a richer course description
+            'start_date' => $this->faker->dateTimeBetween('-1 year', '+1 year')->format('Y-m-d'), // Start date between last year and next year
         ];
     }
 }

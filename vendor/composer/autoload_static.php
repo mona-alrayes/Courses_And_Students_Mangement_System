@@ -691,6 +691,7 @@ class ComposerStaticInit9c491b8531eec05ba41a11d9276a5749
         'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
         'Database\\Seeders\\CourseInstructorSeeder' => __DIR__ . '/../..' . '/database/seeders/CourseInstructorSeeder.php',
         'Database\\Seeders\\CourseSeeder' => __DIR__ . '/../..' . '/database/seeders/CourseSeeder.php',
+        'Database\\Seeders\\CourseStudentSeeder' => __DIR__ . '/../..' . '/database/seeders/CourseStudentSeeder.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
         'Database\\Seeders\\InstructorSeeder' => __DIR__ . '/../..' . '/database/seeders/InstructorSeeder.php',
         'Database\\Seeders\\StudentSeeder' => __DIR__ . '/../..' . '/database/seeders/StudentSeeder.php',
