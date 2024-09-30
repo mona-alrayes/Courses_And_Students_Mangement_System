@@ -22,6 +22,6 @@ class Student extends Model
      */
     public function courses(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Course::class,'course_student', 'student_id', 'course_id');
+        return $this->belongsToMany(Course::class,'course_student', 'student_id', 'course_id')->withTimestamps();
     }
 }

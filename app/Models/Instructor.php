@@ -32,7 +32,7 @@ class Instructor extends Model
 
     public function courses(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Course::class, 'course_instructor', 'instructor_id', 'course_id');
+        return $this->belongsToMany(Course::class, 'course_instructor', 'instructor_id', 'course_id')->withTimestamps();
     }
 
     
