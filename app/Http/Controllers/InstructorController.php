@@ -129,7 +129,7 @@ class InstructorController extends Controller
     }
 
     /**
-     * Show students of Specific instructor using hasManyThrough 
+     * Show students of Specific instructor using hasManyThrough or hasManyDeep
      *
      * @param Instructor $instructor
      * @return \Illuminate\Http\JsonResponse
