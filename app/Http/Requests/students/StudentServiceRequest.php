@@ -61,7 +61,7 @@ class StudentServiceRequest extends FormRequest
     {
         return [
             'name' => 'الاسم',
-            'email' => 'الاختصاص',
+            'email' => 'البريد الالكتروني',
             'course_id' => 'معرف الدورة'
         ];
     }
