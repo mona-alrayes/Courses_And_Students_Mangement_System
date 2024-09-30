@@ -71,7 +71,7 @@ class Instructor extends Model
 
     public function getStudents()
     {
-        return $pivotData= $this->hasManyThrough(courseStudent::class, courseInstructor::class, 'instructor_id', 'course_id', 'id', 'course_id');
-        // return Student::whereIn('id', $pivotData->pluck('student_id'));
+          $pivotData= $this->hasManyThrough(courseStudent::class, courseInstructor::class, 'instructor_id', 'course_id', 'id', 'course_id');
+          return Student::whereIn('id', $pivotData->pluck('student_id'));
     }
 }

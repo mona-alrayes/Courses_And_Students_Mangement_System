@@ -25,6 +25,8 @@ class courseServiceRequest extends FormRequest
             'title' => ['string', 'min:3', 'max:255'],
             'description' => ['string', 'min:3', 'max:3000'],
             'start_date' => ['date_format:d-m-Y'],
+            'instructor_id' => ['array'], // Expect instructor_id as an array
+            'instructor_id.*' => ['integer', 'exists:instructors,id'],
         ];
 
         if ($this->isMethod('post')) {
@@ -32,11 +34,14 @@ class courseServiceRequest extends FormRequest
             $rules['title'][] = 'required';
             $rules['description'][] = 'required';
             $rules['start_date'][] = 'required';
+            $rules['instructor_id'][] = 'nullable';
         } else if ($this->isMethod('put')) {
             // Allow optional fields for update request
             $rules['title'][] = 'sometimes';
             $rules['description'][] = 'sometimes';
             $rules['start_date'][] = 'nullable';
+            $rules['instructor_id'][] = 'nullable';
+
         }
 
         return $rules;
@@ -53,6 +58,8 @@ class courseServiceRequest extends FormRequest
             'max' => 'عدد محارف :attribute لا يجب أن يتجاوز :max محرفًا',
             'min' => 'حقل :attribute يجب أن يكون :min محارف على الأقل',
             'date_format' => 'حقل :attribute يجب أن يكون بصيغة تاريخ صحيحة مثل :format',
+            'integer' => 'حقل :attribute يجب ان يكون :integer',
+            'exists:instructors,id' => 'حقل :attribute موجود في قاعدة البيانات',
         ];
     }
 
@@ -65,6 +72,7 @@ class courseServiceRequest extends FormRequest
             'title' => 'العنوان',
             'description' => 'الوصف',
             'start_date' => 'تاريخ بداية الدورة',
+            'instructor_id' => 'معرف المدرس',
         ];
     }
 

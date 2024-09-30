@@ -33,7 +33,7 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request): \Illuminate\Http\JsonResponse
     {
-       $course= $this->CoursesService->storeCourse($request);
+       $course= $this->CoursesService->storeCourse($request->validated());
         return self::success($course, 'Course created successfully.', 201);
     }
 
@@ -57,7 +57,7 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, Course $course): \Illuminate\Http\JsonResponse
     {
-        $course= $this->CoursesService->updateCourse($course , $request);
+        $course= $this->CoursesService->updateCourse($course , $request->validated());
         return self::success($course, 'Course updated successfully.', 201);
     }
 
