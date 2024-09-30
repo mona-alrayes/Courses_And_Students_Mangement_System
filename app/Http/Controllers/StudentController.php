@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorestudentRequest;
-use App\Http\Requests\UpdatestudentRequest;
-use App\Models\student;
+use App\Http\Requests\students\StorestudentRequest;
+use App\Http\Requests\students\UpdatestudentRequest;
+use App\Models\Student;
 use App\Services\StudentsService;
 
 class StudentController extends Controller
@@ -38,7 +38,7 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(student $student): \Illuminate\Http\JsonResponse
+    public function show(Student $student): \Illuminate\Http\JsonResponse
     {
         return self::success($student,'student retrieved successfully',200);
     }
@@ -47,7 +47,7 @@ class StudentController extends Controller
      * Update the specified resource in storage.
      * @throws \Exception
      */
-    public function update(UpdatestudentRequest $request, student $student): \Illuminate\Http\JsonResponse
+    public function update(UpdatestudentRequest $request, Student $student): \Illuminate\Http\JsonResponse
     {
         $student = $this->StudentsService->updateStudent($student,$request->validated());
         return self::success($student,'student updated successfully',200);
@@ -56,12 +56,16 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(student $student): \Illuminate\Http\JsonResponse
+    public function destroy(Student $student): \Illuminate\Http\JsonResponse
     {
         $student->delete();
         return self::success($student,'student deleted successfully',200);
     }
-
+    /**
+     * Undocumented function
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function showDeletedStudents(): \Illuminate\Http\JsonResponse
     {
         $students = Student::onlyTrashed()->get();
@@ -70,7 +74,13 @@ class StudentController extends Controller
         }
         return self::success($students,'Deleted students retrieved successfully',200);
     }
-    public function restoreStudent(student $student): \Illuminate\Http\JsonResponse
+    /**
+     * Undocumented function
+     *
+     * @param student $student
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function restoreStudent(Student $student): \Illuminate\Http\JsonResponse
     {
         if($student->Trashed() === null){
             return self::error('Student is already exists not Deleted !! ', 404);
@@ -79,7 +89,13 @@ class StudentController extends Controller
             return self::success($student,'student restored successfully',200);
         }
     }
-    public function forceDeleteStudent(student $student): \Illuminate\Http\JsonResponse
+    /**
+     * Undocumented function
+     *
+     * @param student $student
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function forceDeleteStudent(Student $student): \Illuminate\Http\JsonResponse
     {
         if($student->Trashed() === null) {
             return self::error('Student is not Deleted !! ', 404);

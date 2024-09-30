@@ -109,8 +109,9 @@ class CourseController extends Controller
         return self::success( 'Course deleted successfully.', 200);
     }
 
-    public function showStudents(Course $course): \Illuminate\Http\JsonResponse
+    public function showStudents(string $id): \Illuminate\Http\JsonResponse
     {
+      $course= Course::findOrFail($id);
       $students = $course->students()->paginate(10);
       return self::paginated($students, ' students retrieved sucessfully', 200);
     }

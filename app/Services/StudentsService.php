@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 
-use App\Models\student;
+use App\Models\Student;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
