@@ -109,6 +109,12 @@ class CourseController extends Controller
         return self::success( 'Course deleted successfully.', 200);
     }
 
+    /**
+     * shows students of specific course 
+     *
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function showStudents(string $id): \Illuminate\Http\JsonResponse
     {
       $course= Course::findOrFail($id);
