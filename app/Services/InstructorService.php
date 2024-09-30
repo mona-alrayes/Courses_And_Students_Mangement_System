@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Models\Instructor;
@@ -21,9 +22,11 @@ class InstructorService
             throw new Exception($exception->getMessage());
         }
     }
-
     /**
+     * add new instructor
      * @throws Exception
+     * @param array $instructorData
+     * @return Instructor
      */
     public function storeInstructor(array $instructorData): Instructor
     {
@@ -31,10 +34,10 @@ class InstructorService
             $instructor = Instructor::create($instructorData);
 
             // Ensure 'course_id' is always an array, even if a single ID is provided
-        if (isset($instructorData['course_id'])) {
-            $courseIds = is_array($instructorData['course_id']) ? $instructorData['course_id'] : [$instructorData['course_id']];
-            $instructor->courses()->sync($courseIds);
-        }
+            if (isset($instructorData['course_id'])) {
+                $courseIds = is_array($instructorData['course_id']) ? $instructorData['course_id'] : [$instructorData['course_id']];
+                $instructor->courses()->sync($courseIds);
+            }
 
             return $instructor->load('courses');
         } catch (Exception $exception) {
@@ -42,21 +45,25 @@ class InstructorService
         }
     }
 
-
     /**
+     * Update instructor 
+     *
+     * @param Instructor $instructor
+     * @param array $instructorData
      * @throws Exception
+     * @return Instructor
      */
     public function updateInstructor(Instructor $instructor, array $instructorData): Instructor
     {
-        try{
+        try {
             $instructor->update(array_filter($instructorData));
-             // Ensure 'course_id' is always an array, even if a single ID is provided
-        if (isset($instructorData['course_id'])) {
-            $courseIds = is_array($instructorData['course_id']) ? $instructorData['course_id'] : [$instructorData['course_id']];
-            $instructor->courses()->sync($courseIds);
-        }
+            // Ensure 'course_id' is always an array, even if a single ID is provided
+            if (isset($instructorData['course_id'])) {
+                $courseIds = is_array($instructorData['course_id']) ? $instructorData['course_id'] : [$instructorData['course_id']];
+                $instructor->courses()->sync($courseIds);
+            }
             return $instructor->load('courses');
-        }catch (Exception $exception) {
+        } catch (Exception $exception) {
             throw new Exception($exception->getMessage());
         }
     }

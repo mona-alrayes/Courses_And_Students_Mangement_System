@@ -10,8 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Instructor extends Model
 {
-    use HasFactory, softDeletes;
     use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
+
+    use HasFactory, softDeletes;
 
 
     protected $fillable = [
